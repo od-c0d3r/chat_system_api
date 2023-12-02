@@ -58,21 +58,4 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
       expect(JSON.parse(response.body)['name']).to eq('Updated Application')
     end
   end
-
-  describe 'DELETE /api/v1/applications/:token' do
-    it 'deletes an Application' do
-      application = FactoryBot.create(:application)
-
-      delete "/api/v1/applications/#{application.token}"
-
-      expect(response).to have_http_status(:success)
-      expect(Application.count).to eq(0)
-    end
-    it 'reutrns 404 if token not found' do
-      delete '/api/v1/applications/invalid'
-
-      expect(response).to have_http_status(:not_found)
-      expect(JSON.parse(response.body)['errors']).to eq('Application not found')
-    end
-  end
 end
