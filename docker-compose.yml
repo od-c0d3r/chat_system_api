@@ -1,0 +1,34 @@
+version: '3'
+services:
+  web:
+    build:
+      dockerfile: Dockerfile
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - '3000:3000'
+    environment:
+      - RAILS_ENV=development
+      - REDIS_URL=redis://redis:6379
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - elasticsearch
+      - redis
+  db:
+    image: mysql:latest
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_DATABASE=chat_system_api_development
+    volumes:
+      - ./tmp/db:/var/lib/mysql
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.1
+    environment:
+      - discovery.type=single-node
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
