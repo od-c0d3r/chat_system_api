@@ -51,3 +51,5 @@ group :development do
 end
 
 gem "faker", "~> 3.2"
+
+gem "blueprinter", "~> 0.30.0"

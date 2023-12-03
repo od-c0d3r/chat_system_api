@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::ApplicationsController, type: :request do
+  def data_of(response)
+    response_data = JSON.parse(response)['data']
+    ActiveSupport::JSON.decode(response_data)
+  end
+
   describe 'GET /api/v1/applications' do
     it 'returns Applications data' do
       FactoryBot.create_list(:application, 10)
@@ -10,7 +15,7 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
       get '/api/v1/applications'
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['data'].length).to eq(10)
+      expect(data_of(response.body).length).to eq(10)
     end
   end
 
@@ -21,7 +26,7 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
       get "/api/v1/applications/#{application.token}"
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['data']['name']).to eq(application.name)
+      expect(data_of(response.body)['name']).to eq(application.name)
     end
 
     it 'returns 404 if token not found' do
@@ -43,7 +48,7 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
       post '/api/v1/applications', params: { name: 'Test Application' }
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['data']['token']).to be_present
+      expect(data_of(response.body)['token']).to be_present
     end
   end
 
@@ -54,7 +59,20 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
       put "/api/v1/applications/#{application.token}", params: { name: 'Updated Application' }
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['data']['name']).to eq('Updated Application')
+      expect(data_of(response.body)['name']).to eq('Updated Application')
+    end
+  end
+
+  describe 'it dose not return application id in response' do
+    it 'does not return application id in response' do
+      FactoryBot.create_list(:application, 10)
+
+      get '/api/v1/applications'
+
+      expect(response).to have_http_status(:success)
+      expect(data_of(response.body)[0]['id']).to be_nil
+      expect(data_of(response.body)[0]['token']).to be_present
+      expect(data_of(response.body)[0]['name']).to be_present
     end
   end
 end
