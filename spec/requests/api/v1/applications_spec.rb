@@ -10,7 +10,7 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
       get '/api/v1/applications'
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).length).to eq(10)
+      expect(JSON.parse(response.body)['data'].length).to eq(10)
     end
   end
 
@@ -22,14 +22,14 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
       get "/api/v1/applications/#{application.token}"
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['name']).to eq(application.name)
-      expect(JSON.parse(response.body)['chats_count']).to eq(chats.length)
+      expect(JSON.parse(response.body).data.name).to eq(application.name)
+      expect(JSON.parse(response.body).data.chats_count).to eq(chats.length)
     end
     it 'returns 404 if token not found' do
       get '/api/v1/applications/invalid'
 
       expect(response).to have_http_status(:not_found)
-      expect(JSON.parse(response.body)['errors']).to eq('Application not found')
+      expect(JSON.parse(response.body).errors).to eq(['Application not found'])
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
       post '/api/v1/applications', params: { name: 'Test Application' }
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['token']).to be_present
+      expect(JSON.parse(response.body).data.token).to be_present
     end
   end
 
@@ -55,7 +55,7 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
       put "/api/v1/applications/#{application.token}", params: { name: 'Updated Application' }
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['name']).to eq('Updated Application')
+      expect(JSON.parse(response.body).data.name).to eq('Updated Application')
     end
   end
 end
