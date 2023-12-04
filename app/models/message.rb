@@ -1,4 +1,7 @@
 class Message < ApplicationRecord
+  include Message::Callbacks
+
   belongs_to :chat
-  validates :body, uniqueness: { scope: :chat_id }
+
+  validates :number, uniqueness: { scope: :chat_id }
 end

@@ -1,83 +1,94 @@
 # frozen_string_literal: true
 
-describe Api::V1::MessagesController, type: :request do
-  describe 'GET /api/v1/chats/:chat_number/messages' do
+require 'rails_helper'
+
+RSpec.describe Api::V1::MessagesController, type: :request do
+  let(:chat) { FactoryBot.create(:chat) }
+
+  describe 'GET /api/v1/applications/:application_token/chats/:chat_number/messages' do
     it 'returns an chat messages' do
-      chat = FactoryBot.create(:chat)
+      token = chat.application.token
       FactoryBot.create_list(:message, 5, chat: chat)
 
-      get "/api/v1/chats/#{chat.number}/messages"
+      get "/api/v1/applications/#{token}/chats/#{chat.number}/messages",
+          params: { chat_number: chat.number, application_token: chat.application.token }
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body).length).to eq(5)
+      expect(data_of(response.body).length).to eq(5)
     end
   end
 
-  describe 'GET /api/v1/chats/:chat_number/messages/:message_number' do
-    it 'returns a message' do
-      chat = FactoryBot.create(:chat)
+  describe 'GET /api/v1/applications/:application_token/chats/:chat_number/messages/:message_number' do
+    it 'returns a Message' do
+      token = chat.application.token
       message = FactoryBot.create(:message, chat: chat)
 
-      get "/api/v1/chats/#{chat.number}/messages/#{message.number}"
+      get "/api/v1/applications/#{token}/chats/#{chat.number}/messages/#{message.number}"
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)['body']).to eq(message.body)
+      expect(data_of(response.body)['body']).to eq(message.body)
     end
 
     it 'returns 404 if chat_number not found' do
-      get '/api/v1/chats/invalid/messages/1'
+      token = chat.application.token
+
+      get "/api/v1/applications/#{token}/chats/invalid/messages/1"
 
       expect(response).to have_http_status(:not_found)
       expect(JSON.parse(response.body)['errors']).to eq('Chat not found')
     end
 
     it 'returns 404 if message_number not found' do
-      chat = FactoryBot.create(:chat)
+      token = chat.application.token
 
-      get "/api/v1/chats/#{chat.number}/messages/invalid"
+      get "/api/v1/applications/#{token}/chats/#{chat.number}/messages/invalid"
 
       expect(response).to have_http_status(:not_found)
       expect(JSON.parse(response.body)['errors']).to eq('Message not found')
     end
   end
 
-  describe 'POST /api/v1/chats/:chat_number/messages' do
+  describe 'POST /api/v1/applications/:application_token/chats/:chat_number/messages' do
     it 'creates a new message' do
-      chat = FactoryBot.create(:chat)
+      token = chat.application.token
 
-      post "/api/v1/chats/#{chat.number}/messages", params: { body: 'test' }
+      post "/api/v1/applications/#{token}/chats/#{chat.number}/messages", params: { body: 'test' }
 
       expect(response).to have_http_status(:success)
-      expect(chat.messages_count).to eq(1)
+      expect(chat.messages.count).to eq(1)
     end
     it 'returns 404 if chat_number not found' do
-      post '/api/v1/chats/invalid/messages', params: { body: 'test' }
+      token = chat.application.token
+
+      post "/api/v1/applications/#{token}/chats/invalid/messages", params: { body: 'test' }
 
       expect(response).to have_http_status(:not_found)
       expect(JSON.parse(response.body)['errors']).to eq('Chat not found')
     end
   end
 
-  describe 'PATCH /api/v1/chats/:chat_number/messages/:message_number' do
+  describe 'PATCH /api/v1/applications/:application_token/chats/:chat_number/messages/:message_number' do
     it 'updates a message' do
-      chat = FactoryBot.create(:chat)
+      token = chat.application.token
       message = FactoryBot.create(:message, chat: chat, body: 'test')
 
-      put "/api/v1/chats/#{chat.number}/messages/#{message.number}", params: { body: 'test2' }
+      put "/api/v1/applications/#{token}/chats/#{chat.number}/messages/#{message.number}", params: { body: 'test2' }
 
       expect(response).to have_http_status(:success)
       expect(message.reload.body).to eq('test2')
     end
     it 'returns 404 if chat_number not found' do
-      put '/api/v1/chats/invalid/messages/1', params: { body: 'test' }
+      token = chat.application.token
+
+      put "/api/v1/applications/#{token}/chats/invalid/messages/1", params: { body: 'test' }
 
       expect(response).to have_http_status(:not_found)
       expect(JSON.parse(response.body)['errors']).to eq('Chat not found')
     end
     it 'returns 404 if message_number not found' do
-      chat = FactoryBot.create(:chat)
+      token = chat.application.token
 
-      put "/api/v1/chats/#{chat.number}/messages/invalid", params: { body: 'test' }
+      put "/api/v1/applications/#{token}/chats/#{chat.number}/messages/invalid", params: { body: 'test' }
 
       expect(response).to have_http_status(:not_found)
       expect(JSON.parse(response.body)['errors']).to eq('Message not found')
