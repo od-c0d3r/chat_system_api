@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_03_202332) do
 
   create_table "chats", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "number", null: false
-    t.integer "messages_count"
+    t.integer "messages_count", default: 0
     t.bigint "application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
