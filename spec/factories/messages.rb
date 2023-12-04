@@ -1,7 +1,7 @@
-# FactoryBot.define do
-#   factory :message do
-#     chat FactoryBot.create(:chat)
-#     message_number 1
-#     body Faker::Lorem.sentence
-#   end
-# end
+FactoryBot.define do
+  factory :message do
+    body { Faker::Lorem.sentence }
+    number { nil }
+    chat { nil }
+  end
+end

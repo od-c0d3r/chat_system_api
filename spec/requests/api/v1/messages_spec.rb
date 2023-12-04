@@ -58,7 +58,7 @@ describe Api::V1::MessagesController, type: :request do
     end
   end
 
-  describe 'PUT /api/v1/chats/:chat_number/messages/:message_number' do
+  describe 'PATCH /api/v1/chats/:chat_number/messages/:message_number' do
     it 'updates a message' do
       chat = FactoryBot.create(:chat)
       message = FactoryBot.create(:message, chat: chat, body: 'test')

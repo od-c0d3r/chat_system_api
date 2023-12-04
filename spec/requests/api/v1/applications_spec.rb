@@ -3,11 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::ApplicationsController, type: :request do
-  def data_of(response)
-    response_data = JSON.parse(response)['data']
-    ActiveSupport::JSON.decode(response_data)
-  end
-
   describe 'GET /api/v1/applications' do
     it 'returns Applications data' do
       FactoryBot.create_list(:application, 10)
@@ -65,7 +60,7 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
 
   describe 'it dose not return application id in response' do
     it 'does not return application id in response' do
-      FactoryBot.create_list(:application, 10)
+      FactoryBot.create(:application)
 
       get '/api/v1/applications'
 
