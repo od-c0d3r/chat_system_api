@@ -1,11 +1,11 @@
 class Api::V1::ChatsController < ApplicationController
   before_action :set_application
-  before_action :set_chat, only: %i[show update]
+  before_action :set_chat, only: %i[show update search]
 
   def index
     if @application
       chats = @application.chats
-      render_success_response(ChatBlueprint.render(chats), 'Chats fetched successfully', 200)
+      render_success_response(chats, 'Chats fetched successfully', 200)
     else
       render_error_response('Application not found', 404)
     end
@@ -13,7 +13,7 @@ class Api::V1::ChatsController < ApplicationController
 
   def show
     if @application && @chat
-      render_success_response ChatBlueprint.render(@chat), 'Chat fetched successfully', 200
+      render_success_response @chat, 'Chat fetched successfully', 200
     else
       return render_error_response('Application not found', 404) unless @application
 
@@ -24,18 +24,33 @@ class Api::V1::ChatsController < ApplicationController
   def create
     chat = Chat.new application: @application
 
-    if chat.save
-      render_success_response(ChatBlueprint.render(chat), 'Chat created successfully', 201)
+    if @application && chat.save
+      @application.update(chats_count: @application.chats_count + 1) # worker needed
+
+      render_success_response(chat, 'Chat created successfully', 201)
     else
+      return render_error_response('Application not found', 404) unless @application
+
       render_error_response(chat.errors.full_messages, 404)
     end
   end
 
   def update
-    if @application && @chat
-      @chat.update chat_params.except(:application_token)
+    if @application && @chat && @chat.update(chat_params)
+      render_success_response(@chat, 'Chat updated successfully', 200)
+    else
+      return render_error_response('Application not found', 404) unless @application
+      return render_error_response('Chat not found', 404) unless @chat
 
-      render_success_response(ChatBlueprint.render(@chat), 200)
+      render_error_response(@chat.errors.full_messages, 404)
+    end
+  end
+
+  def search
+    if @application && @chat
+      messages = @chat.messages.search(search_param[:query])
+
+      render_success_response(messages, 'Messages fetched successfully', 200)
     else
       return render_error_response('Application not found', 404) unless @application
 
@@ -45,9 +60,15 @@ class Api::V1::ChatsController < ApplicationController
 
   private
 
-  def chat_params = params.permit(:number, :messages_count, :application_token)
+  def chat_params
+    params.require(:chat).permit(:messages_count)
+  end
 
-  def set_application = @application = Application.find_by(token: params[:application_token])
+  def search_param
+    params.permit(:query)
+  end
 
-  def set_chat = @chat = @application&.chats&.find_by(number: params[:number])
+  def set_application = @application = Application.find_by_token(params[:application_token])
+
+  def set_chat = @chat = @application&.chats&.find_by_number(params[:chat_number] || params[:number])
 end
