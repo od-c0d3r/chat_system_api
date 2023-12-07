@@ -33,14 +33,14 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
 
   describe 'POST /api/v1/applications' do
     it 'creates a new Application' do
-      post '/api/v1/applications', params: { name: 'Test Application' }
+      post '/api/v1/applications', params: { application: { name: 'Test Application' } }
 
       expect(response).to have_http_status(:success)
       expect(Application.count).to eq(1)
     end
 
     it 'returns the created Application token' do
-      post '/api/v1/applications', params: { name: 'Test Application' }
+      post '/api/v1/applications', params: { application: { name: 'Test Application' } }
 
       expect(response).to have_http_status(:success)
       expect(data_of(response.body)['token']).to be_present
@@ -51,7 +51,7 @@ RSpec.describe Api::V1::ApplicationsController, type: :request do
     it 'updates an Application' do
       application = FactoryBot.create(:application, name: 'Test Application')
 
-      put "/api/v1/applications/#{application.token}", params: { name: 'Updated Application' }
+      put "/api/v1/applications/#{application.token}", params: { application: { name: 'Updated Application' } }
 
       expect(response).to have_http_status(:success)
       expect(data_of(response.body)['name']).to eq('Updated Application')

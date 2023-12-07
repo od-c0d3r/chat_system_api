@@ -1,5 +1,5 @@
 class Chat < ApplicationRecord
-  include Relations
-  include Validations
-  include Callbacks
+  include Chat::Relations
+  include Chat::Validations
+  include Chat::Callbacks
 end

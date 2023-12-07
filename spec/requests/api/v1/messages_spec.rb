@@ -52,7 +52,7 @@ RSpec.describe Api::V1::MessagesController, type: :request do
     it 'creates a new message' do
       token = chat.application.token
 
-      post "/api/v1/applications/#{token}/chats/#{chat.number}/messages", params: { body: 'test' }
+      post "/api/v1/applications/#{token}/chats/#{chat.number}/messages", params: { message: { body: 'test' } }
 
       expect(response).to have_http_status(:success)
       expect(chat.messages.count).to eq(1)
@@ -60,7 +60,7 @@ RSpec.describe Api::V1::MessagesController, type: :request do
     it 'returns 404 if chat_number not found' do
       token = chat.application.token
 
-      post "/api/v1/applications/#{token}/chats/invalid/messages", params: { body: 'test' }
+      post "/api/v1/applications/#{token}/chats/invalid/messages", params: { message: { body: 'test' } }
 
       expect(response).to have_http_status(:not_found)
       expect(JSON.parse(response.body)['errors']).to eq('Chat not found')
@@ -72,7 +72,8 @@ RSpec.describe Api::V1::MessagesController, type: :request do
       token = chat.application.token
       message = FactoryBot.create(:message, chat: chat, body: 'test')
 
-      put "/api/v1/applications/#{token}/chats/#{chat.number}/messages/#{message.number}", params: { body: 'test2' }
+      put "/api/v1/applications/#{token}/chats/#{chat.number}/messages/#{message.number}",
+          params: { message: { body: 'test2' } }
 
       expect(response).to have_http_status(:success)
       expect(message.reload.body).to eq('test2')
@@ -80,7 +81,7 @@ RSpec.describe Api::V1::MessagesController, type: :request do
     it 'returns 404 if chat_number not found' do
       token = chat.application.token
 
-      put "/api/v1/applications/#{token}/chats/invalid/messages/1", params: { body: 'test' }
+      put "/api/v1/applications/#{token}/chats/invalid/messages/1", params: { message: { body: 'test' } }
 
       expect(response).to have_http_status(:not_found)
       expect(JSON.parse(response.body)['errors']).to eq('Chat not found')
@@ -88,7 +89,7 @@ RSpec.describe Api::V1::MessagesController, type: :request do
     it 'returns 404 if message_number not found' do
       token = chat.application.token
 
-      put "/api/v1/applications/#{token}/chats/#{chat.number}/messages/invalid", params: { body: 'test' }
+      put "/api/v1/applications/#{token}/chats/#{chat.number}/messages/invalid", params: { message: { body: 'test' } }
 
       expect(response).to have_http_status(:not_found)
       expect(JSON.parse(response.body)['errors']).to eq('Message not found')
