@@ -1,0 +1,554 @@
+{
+	"info": {
+		"_postman_id": "dfa7dd89-f0a4-4640-ab33-37674dc9bc68",
+		"name": "InstaChat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29563515"
+	},
+	"item": [
+		{
+			"name": "applications",
+			"item": [
+				{
+					"name": "/applications",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/applications",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/applications/:token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/applications/:token",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/applications",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\n//     \"application\": {\n//         \"name\": \"String\"\n//     }\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/applications",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/applications/:token",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/applications/:token",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "chats",
+			"item": [
+				{
+					"name": "/chats/:number/search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"query\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{applications_url}}/:application_token/chats/:number/search",
+							"host": [
+								"{{applications_url}}"
+							],
+							"path": [
+								":application_token",
+								"chats",
+								":number",
+								"search"
+							],
+							"variable": [
+								{
+									"key": "application_token",
+									"value": "wZhjkHA2GopqBFkiKKUmzFoD"
+								},
+								{
+									"key": "number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/chats",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{applications_url}}/:application_token/chats",
+							"host": [
+								"{{applications_url}}"
+							],
+							"path": [
+								":application_token",
+								"chats"
+							],
+							"variable": [
+								{
+									"key": "application_token",
+									"value": "wZhjkHA2GopqBFkiKKUmzFoD"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/chats/:number",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{applications_url}}/:application_token/chats/:number",
+							"host": [
+								"{{applications_url}}"
+							],
+							"path": [
+								":application_token",
+								"chats",
+								":number"
+							],
+							"variable": [
+								{
+									"key": "application_token",
+									"value": "wZhjkHA2GopqBFkiKKUmzFoD"
+								},
+								{
+									"key": "number",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/chats",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\n//     \"application\": {\n//         \"name\": \"String\"\n//     }\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{applications_url}}/:application_token/chats",
+							"host": [
+								"{{applications_url}}"
+							],
+							"path": [
+								":application_token",
+								"chats"
+							],
+							"variable": [
+								{
+									"key": "application_token",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/chats/:number",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"chat\": {\n        \"messages_count\": -1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{applications_url}}/:application_token/chats/:number",
+							"host": [
+								"{{applications_url}}"
+							],
+							"path": [
+								":application_token",
+								"chats",
+								":number"
+							],
+							"variable": [
+								{
+									"key": "application_token",
+									"value": "wZhjkHA2GopqBFkiKKUmzFoD"
+								},
+								{
+									"key": "number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "messages",
+			"item": [
+				{
+					"name": "/messages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{applications_url}}/:application_token/chats/:chat_number/messages",
+							"host": [
+								"{{applications_url}}"
+							],
+							"path": [
+								":application_token",
+								"chats",
+								":chat_number",
+								"messages"
+							],
+							"variable": [
+								{
+									"key": "application_token",
+									"value": "wZhjkHA2GopqBFkiKKUmzFoD"
+								},
+								{
+									"key": "chat_number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/messages/:number",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{applications_url}}/:application_token/chats/:chat_number/messages/:number",
+							"host": [
+								"{{applications_url}}"
+							],
+							"path": [
+								":application_token",
+								"chats",
+								":chat_number",
+								"messages",
+								":number"
+							],
+							"variable": [
+								{
+									"key": "application_token",
+									"value": "wZhjkHA2GopqBFkiKKUmzFoD"
+								},
+								{
+									"key": "chat_number",
+									"value": "2"
+								},
+								{
+									"key": "number",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/messages",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": {\n        \"body\": \"instabug omar\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{applications_url}}/:application_token/chats/:chat_number/messages",
+							"host": [
+								"{{applications_url}}"
+							],
+							"path": [
+								":application_token",
+								"chats",
+								":chat_number",
+								"messages"
+							],
+							"variable": [
+								{
+									"key": "application_token",
+									"value": "wZhjkHA2GopqBFkiKKUmzFoD"
+								},
+								{
+									"key": "chat_number",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/messages/:number",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": {\n        \"body\": \"new insta\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{applications_url}}/:application_token/chats/:chat_number/messages/:number",
+							"host": [
+								"{{applications_url}}"
+							],
+							"path": [
+								":application_token",
+								"chats",
+								":chat_number",
+								"messages",
+								":number"
+							],
+							"variable": [
+								{
+									"key": "application_token",
+									"value": "wZhjkHA2GopqBFkiKKUmzFoD"
+								},
+								{
+									"key": "chat_number",
+									"value": "2"
+								},
+								{
+									"key": "number",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "applications_url",
+			"value": "localhost:3000/api/v1/applications"
+		},
+		{
+			"value": "",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
