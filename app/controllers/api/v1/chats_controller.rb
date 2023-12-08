@@ -25,7 +25,7 @@ class Api::V1::ChatsController < ApplicationController
     chat = Chat.new application: @application
 
     if @application && chat.save
-      @application.update(chats_count: @application.chats_count + 1) # worker needed
+      Chats::CreateJob.perform_async @application.token
 
       render_success_response(chat, 'Chat created successfully', 201)
     else

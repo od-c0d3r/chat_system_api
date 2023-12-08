@@ -31,3 +31,17 @@ services:
     image: redis:latest
     ports:
       - '6379:6379'
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile.sidekiq
+    depends_on:
+      - web
+      - redis
+    environment:
+      - RAILS_ENV=development
+      - REDIS_URL=redis://redis:6379
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - MYSQL_HOST=db
+    volumes:
+      - .:/app

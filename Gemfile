@@ -53,3 +53,9 @@ end
 gem "faker", "~> 3.2"
 
 gem "blueprinter", "~> 0.30.0"
+
+gem "sidekiq", "~> 7.2"
+
+gem "redis", "~> 4.8"
+
+gem "redis-mutex", "~> 4.0"
