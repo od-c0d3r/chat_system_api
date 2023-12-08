@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
   def render_success_response(data = nil, message = nil, code = 200)
     render json: {
-      data: data.as_json(except: %i[id chat_id application_id created_at updated_at]),
+      data: JSON.parse(data),
       message: message,
       status_code: code
     }, status: code

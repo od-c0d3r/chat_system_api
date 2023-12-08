@@ -3,5 +3,7 @@ class ApplicationBlueprint < Blueprinter::Base
 
   fields :name, :chats_count, :created_at, :updated_at
 
-  association :chats, blueprint: ChatBlueprint
+  view :with_chats do
+    association :chats, blueprint: ChatBlueprint
+  end
 end

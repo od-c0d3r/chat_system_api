@@ -11,6 +11,10 @@ puts 'Seeding...'
       application: application
     )
     5.times do
+      chat.update(
+        messages_count: chat.messages_count + 1
+      )
+
       Message.create(
         chat: chat,
         body: Faker::Lorem.sentence

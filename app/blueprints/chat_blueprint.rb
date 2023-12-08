@@ -3,5 +3,7 @@ class ChatBlueprint < Blueprinter::Base
 
   fields :messages_count, :created_at, :updated_at
 
-  association :messages, blueprint: MessageBlueprint
+  view :with_messages do
+    association :messages, blueprint: MessageBlueprint
+  end
 end
