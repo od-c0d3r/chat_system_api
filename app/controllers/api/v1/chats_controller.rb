@@ -31,26 +31,26 @@ class Api::V1::ChatsController < ApplicationController
     else
       return render_error_response('Application not found', 404) unless @application
 
-      render_error_response(chat.errors.full_messages, 404)
+      render_error_response chat.errors.full_messages, 404
     end
   end
 
   def update
     if @application && @chat && @chat.update(chat_params)
-      render_success_response(@chat, 'Chat updated successfully', 200)
+      render_success_response ChatBlueprint.render(@chat), 'Chat updated successfully', 200
     else
       return render_error_response('Application not found', 404) unless @application
       return render_error_response('Chat not found', 404) unless @chat
 
-      render_error_response(@chat.errors.full_messages, 409)
+      render_error_response @chat.errors.full_messages, 409
     end
   end
 
   def search
     if @application && @chat
-      messages = @chat.messages.search(search_param[:query])
+      messages = @chat.messages.search search_param[:query]
 
-      render_success_response(MessageBlueprint.render(messages), 'Messages fetched successfully', 200)
+      render_success_response MessageBlueprint.render(messages), 'Messages fetched successfully', 200
     else
       return render_error_response('Application not found', 404) unless @application
 

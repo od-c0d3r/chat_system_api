@@ -7,6 +7,10 @@ puts 'Seeding...'
     name: Faker::Company.name
   )
   4.times do
+    application.update(
+      chats_count: application.chats_count + 1
+    )
+
     chat = Chat.create(
       application: application
     )

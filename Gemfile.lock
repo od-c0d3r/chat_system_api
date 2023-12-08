@@ -191,6 +191,8 @@ GEM
       redis-classy (~> 2.0)
     redis-namespace (1.11.0)
       redis (>= 4)
+    redlock (2.0.6)
+      redis-client (>= 0.14.1, < 1.0.0)
     reline (0.4.1)
       io-console (~> 0.5)
     rspec-core (3.12.2)
@@ -243,6 +245,7 @@ DEPENDENCIES
   rails (~> 7.0.8)
   redis (~> 4.8)
   redis-mutex (~> 4.0)
+  redlock (~> 2.0)
   rspec-rails
   sidekiq (~> 7.2)
   tzinfo-data

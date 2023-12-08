@@ -34,7 +34,7 @@ class Api::V1::MessagesController < ApplicationController
   end
 
   def update
-    if @chat && @application && @message.update(message_params)
+    if @chat && @application && @message&.update(message_params)
       render_success_response(MessageBlueprint.render(@message), 'Message updated successfully', 200)
     else
       render_error(@application, @chat, @message)

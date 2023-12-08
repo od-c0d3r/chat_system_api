@@ -59,3 +59,5 @@ gem "sidekiq", "~> 7.2"
 gem "redis", "~> 4.8"
 
 gem "redis-mutex", "~> 4.0"
+
+gem "redlock", "~> 2.0"
