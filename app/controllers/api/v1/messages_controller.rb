@@ -1,23 +1,23 @@
 class Api::V1::MessagesController < ApplicationController
   before_action :set_application
   before_action :set_chat
-  before_action :set_message, only: %i[update show]
+  before_action :set_message, only: %i[show update]
 
   def index
     messages = @chat.messages
 
     if @application && @chat
-      render_success_response(messages, 'Messages fetched successfully', 200)
+      render_success_response(MessageBlueprint.render(messages), 'Messages fetched successfully', 200)
     else
-      render_not_found(@application, @chat)
+      render_error(@application, @chat)
     end
   end
 
   def show
     if @application && @chat && @message
-      render_success_response(@message, 'Message fetched successfully', 200)
+      render_success_response(MessageBlueprint.render(@message), 'Message fetched successfully', 200)
     else
-      render_not_found(@application, @chat, @message)
+      render_error(@application, @chat, @message)
     end
   end
 
@@ -25,21 +25,19 @@ class Api::V1::MessagesController < ApplicationController
     message = @chat&.messages&.new message_params
 
     if @chat && @application && message.save
-      message.chat.update(messages_count: message.chat.messages_count + 1) # worker needed
+      Messages::UpdateChatMessagesCounterJob.perform_async @chat.id
 
-      render_success_response(message, 'Message created successfully', 201)
+      render_success_response(MessageBlueprint.render(message), 'Message created successfully', 201)
     else
-      render_not_found(@application, @chat, message)
+      render_error(@application, @chat, message)
     end
   end
 
   def update
-    if @chat && @application && @message
-      @message.update message_params
-
-      render_success_response(@message, 'Message updated successfully', 200)
+    if @chat && @application && @message.update(message_params)
+      render_success_response(MessageBlueprint.render(@message), 'Message updated successfully', 200)
     else
-      render_not_found(@application, @chat, @message)
+      render_error(@application, @chat, @message)
     end
   end
 
@@ -53,10 +51,11 @@ class Api::V1::MessagesController < ApplicationController
 
   def set_message = @message = @chat&.messages&.find_by_number(params[:number])
 
-  def render_not_found(application = nil, chat = nil, message = nil)
+  def render_error(application = nil, chat = nil, message = nil)
     return render_error_response('Application not found', 404) unless application
     return render_error_response('Chat not found', 404) unless chat
+    return render_error_response('Message not found', 404) unless message
 
-    render_error_response('Message not found', 404) unless message
+    render_error_response(message.errors.full_messages, 409)
   end
 end

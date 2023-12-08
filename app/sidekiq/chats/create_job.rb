@@ -1,4 +1,4 @@
-class Chats::CreateJob
+class Chats::UpdateAppChatsCounterJob
   include Sidekiq::Job
 
   def perform(token)
