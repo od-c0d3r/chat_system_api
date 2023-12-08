@@ -1,4 +1,4 @@
-module Searchable
+module Message::Searchable
   extend ActiveSupport::Concern
 
   included do

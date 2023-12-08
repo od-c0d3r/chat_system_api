@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "dfa7dd89-f0a4-4640-ab33-37674dc9bc68",
-		"name": "InstaChat",
+		"_postman_id": "aaf3aa35-ee53-4bb1-84bf-2ada1ff46130",
+		"name": "ChatSystemAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29563515"
 	},
@@ -73,7 +73,7 @@
 							"variable": [
 								{
 									"key": "token",
-									"value": ""
+									"value": "4X9gN6rvTWHUnXMaxgufdYyx"
 								}
 							]
 						}
@@ -87,7 +87,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\n//     \"application\": {\n//         \"name\": \"String\"\n//     }\n// }",
+							"raw": "{\n    \"application\": {\n        \"name\": \"String\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -160,7 +160,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"query\": \"string\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -168,7 +168,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{applications_url}}/:application_token/chats/:number/search",
+							"raw": "{{applications_url}}/:application_token/chats/:number/search?query",
 							"host": [
 								"{{applications_url}}"
 							],
@@ -177,6 +177,12 @@
 								"chats",
 								":number",
 								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": null
+								}
 							],
 							"variable": [
 								{
@@ -276,7 +282,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\n//     \"application\": {\n//         \"name\": \"String\"\n//     }\n// }",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -309,7 +315,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"chat\": {\n        \"messages_count\": -1\n    }\n}",
+							"raw": "// {\n//     \"chat\": {\n//         \"messages_count\": Number\n//     }\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -441,7 +447,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"message\": {\n        \"body\": \"instabug omar\"\n    }\n}",
+							"raw": "{\n    \"message\": {\n        \"body\": \"new_message\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -480,7 +486,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"message\": {\n        \"body\": \"new insta\"\n    }\n}",
+							"raw": "// {\n//     \"message\": {\n//         \"body\": \"string\"\n//     }\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -502,15 +508,15 @@
 							"variable": [
 								{
 									"key": "application_token",
-									"value": "wZhjkHA2GopqBFkiKKUmzFoD"
+									"value": ""
 								},
 								{
 									"key": "chat_number",
-									"value": "2"
+									"value": ""
 								},
 								{
 									"key": "number",
-									"value": "1"
+									"value": ""
 								}
 							]
 						}

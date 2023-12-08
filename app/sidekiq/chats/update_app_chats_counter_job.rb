@@ -3,7 +3,7 @@ class Chats::UpdateAppChatsCounterJob
 
   def perform(token)
     application = Application.find_by_token token
-    lock_info = RedlockClient.lock("app_lock:#{application.token}", 10_000)
+    lock_info = RedlockClient.lock("app_lock:#{application.token}", 5_000)
 
     return unless lock_info
 

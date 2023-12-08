@@ -1,8 +1,6 @@
 class Message < ApplicationRecord
-  include Searchable
+  include Message::Relations
+  include Message::Validations
   include Message::Callbacks
-
-  belongs_to :chat
-
-  validates :number, uniqueness: { scope: :chat_id }
+  include Message::Searchable
 end

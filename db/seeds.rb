@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-puts 'Seeding...'
+puts 'Seeding DB...'
 
 3.times do
   application = Application.create(
@@ -27,4 +27,4 @@ puts 'Seeding...'
   end
 end
 
-puts 'Seedding Done!'
+puts 'Seeding Done!'

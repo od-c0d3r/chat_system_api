@@ -21,6 +21,7 @@ services:
       - '3306:3306'
     environment:
       - MYSQL_DATABASE=chat_system_api_development
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
       - ./tmp/db:/var/lib/mysql
   elasticsearch:

@@ -5,6 +5,7 @@ class Api::V1::ChatsController < ApplicationController
   def index
     if @application
       chats = @application.chats
+
       render_success_response ChatBlueprint.render(chats), 'Chats fetched successfully', 200
     else
       render_error_response 'Application not found', 404
@@ -15,9 +16,7 @@ class Api::V1::ChatsController < ApplicationController
     if @application && @chat
       render_success_response ChatBlueprint.render(@chat, view: :with_messages), 'Chat fetched successfully', 200
     else
-      return render_error_response('Application not found', 404) unless @application
-
-      render_error_response 'Chat not found', 404
+      render_error(@application, @chat)
     end
   end
 
@@ -29,9 +28,7 @@ class Api::V1::ChatsController < ApplicationController
 
       render_success_response ChatBlueprint.render(chat), 'Chat created successfully', 201
     else
-      return render_error_response('Application not found', 404) unless @application
-
-      render_error_response chat.errors.full_messages, 404
+      render_error(@application, chat)
     end
   end
 
@@ -39,10 +36,7 @@ class Api::V1::ChatsController < ApplicationController
     if @application && @chat && @chat.update(chat_params)
       render_success_response ChatBlueprint.render(@chat), 'Chat updated successfully', 200
     else
-      return render_error_response('Application not found', 404) unless @application
-      return render_error_response('Chat not found', 404) unless @chat
-
-      render_error_response @chat.errors.full_messages, 409
+      render_error(@application, @chat)
     end
   end
 
@@ -52,23 +46,17 @@ class Api::V1::ChatsController < ApplicationController
 
       render_success_response MessageBlueprint.render(messages), 'Messages fetched successfully', 200
     else
-      return render_error_response('Application not found', 404) unless @application
-
-      render_error_response('Chat not found', 404) unless @chat
+      render_error(@application, @chat)
     end
   end
 
   private
 
-  def chat_params
-    params.require(:chat).permit(:messages_count)
-  end
+  def chat_params = params.require(:chat).permit(:messages_count)
 
-  def search_param
-    params.permit(:query)
-  end
+  def search_param = params.permit(:query)
 
   def set_application = @application = Application.find_by_token(params[:application_token])
 
-  def set_chat = @chat = @application&.chats&.includes(:messages)&.find_by_number(params[:number])
+  def set_chat = @chat = @application&.chats&.includes(:messages)&.find_by_number(params[:number] || params[:chat_number])
 end

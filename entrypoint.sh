@@ -7,7 +7,7 @@ rm -f ./tmp/pids/server.pid
 # /dockerize -wait tcp://elasticsearch:9200 -timeout 60s
 
 echo '================ Waiting for ElasticSearch...'
-sleep 20
+sleep 15
 
 echo '================ Creating application database...'
 bundle exec rails db:drop db:create db:migrate db:seed

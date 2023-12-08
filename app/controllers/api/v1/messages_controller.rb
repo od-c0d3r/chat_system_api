@@ -50,12 +50,4 @@ class Api::V1::MessagesController < ApplicationController
   def set_chat = @chat = @application&.chats&.find_by_number(params[:chat_number])
 
   def set_message = @message = @chat&.messages&.find_by_number(params[:number])
-
-  def render_error(application = nil, chat = nil, message = nil)
-    return render_error_response('Application not found', 404) unless application
-    return render_error_response('Chat not found', 404) unless chat
-    return render_error_response('Message not found', 404) unless message
-
-    render_error_response(message.errors.full_messages, 409)
-  end
 end
