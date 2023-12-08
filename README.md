@@ -10,12 +10,12 @@
 6. ⭐️ [Future Improvements](#future-improvements)
 7. 💪 [Challenges](#challenges)
 
-ChatSystemAPI is a full RESTful API application to handle chats between your different applications, where you could have different chat and each chat has many messages. the API allows you to Read, create and Update on all resources. along with a dedicated search Endpoint to search certain chat for messages bodies, it's my solution to a take home assignment from a company hiring process.
+ChatSystemAPI, a RESTful API Rails application designed to facilitate communication between different applications. This solution addresses the need for managing various chats, each containing multiple messages. The API enables reading, creating, and updating resources, and features a dedicated search endpoint for querying message bodies within specific chats. This project emerged as my response to a take-home assignment as part of a company's hiring process. To ensure progress and organization, I utilized a Kanban board, managing tasks and activities efficiently. The Trello board, accessible at this [Link](https://trello.com/invite/b/PSA83cvF/ATTIe159ef77c4be4720bd8e03877c85be9e3D019952/chatsystemapi), served as a tool for smart and organized project management.
 
 ## Instructions video<a name="video"></a>
-I'm a visulaiser guy too, in this short video I demonstrate how to install, start and run tests in our application, using docker and postman.
+I'm also a visualizer, and in this short video, I demonstrate how to install, start, and run tests in our application using Docker and Postman.
 
-
+[Watch the video here](https://www.youtube.com/watch?v=9Ue7FtRXvUQ)
 
 ## Installation
 ### Prerequisites
@@ -39,15 +39,15 @@ I'm a visulaiser guy too, in this short video I demonstrate how to install, star
 	- `docker-compose exec web bash`
 - Run the following to run the tests
 	- `RAILS_ENV=test rspec -f d`
-		- `-f` formatting flag along with the `d` documentation option, to print our tests in a neat nice coloring look.
+		- Using the `-f` formatting flag along with the `d` documentation option to print our tests in a neat, nice coloring look.
 
 ### API Testing
 - After making sure that our containers are up and running
-- Open `Postman` desktop and import `InstaChat.postman_collection.json` file, that will bring the APIs at your finger prints to start use right away.
+- Open `Postman` desktop and import `ChatSystemAPI.postman_collection.json` file, which will bring the APIs at your fingertips to start using right away.
 
 ## Future Improvements
-- Using Pagination in response.
-- Enhance error handling mechanism.
+- Implementing Pagination in the response.
+- Enhancing the error handling mechanism.
 
 ## Challanges
-- Testing Elasticearch & background workers
+- Testing Elasticearch & background jobs.
